@@ -1,3 +1,7 @@
+## 0.0.2
+
+* Fixes
+
 ## 0.0.1
 
-* TODO: Describe initial release.
+* MOVED numeric class into this package

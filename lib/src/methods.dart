@@ -110,7 +110,6 @@ class Numeric {
   // --------------------
   /// TESTED : WORKS PERFECT
   static String formatNumToCounterCaliber({
-    @required BuildContext context,
     @required int x,
     String thousand = 'thousand',
     String million = 'million',
