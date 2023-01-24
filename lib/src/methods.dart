@@ -1,4 +1,207 @@
 part of numeric;
+// ==============================================================================
+
+/// PACKAGE HELPERS
+
+// ====================
+class _Mapper {
+
+  const _Mapper();
+
+  /// TESTED : WORKS PERFECT
+  static bool checkCanLoopList(List<dynamic> list) {
+    bool _canLoop = false;
+
+    if (list != null && list.isNotEmpty) {
+      _canLoop = true;
+    }
+    return _canLoop;
+  }
+
+}
+// ====================
+class _TextCheck {
+  // -----------------------------------------------------------------------------
+
+  const _TextCheck();
+
+  // --------------------
+  /// TESTED : WORKS PERFECT
+  static bool isEmpty(String string) {
+
+    if (string == null || string == '' || string.isEmpty == true
+
+    // ||
+    // TextMod.cutFirstCharacterAfterRemovingSpacesFromAString(_string) == ''
+    // ||
+    // TextMod.cutFirstCharacterAfterRemovingSpacesFromAString(_string) == null
+
+    ) {
+      return true;
+    }
+
+    else {
+      return false;
+    }
+
+  }
+  // --------------------
+  /// TESTED : WORKS PERFECT
+  static bool stringContainsSubString({
+    @required String string,
+    @required String subString,
+  }) {
+    bool _itContainsIt = false;
+
+    if (string != null && subString != null) {
+      if (
+      string.toLowerCase().contains(subString?.toLowerCase())
+      ) {
+        _itContainsIt = true;
+      }
+    }
+
+    return _itContainsIt;
+  }
+  // -----------------------------------------------------------------------------
+}
+// ====================
+class _TextMod {
+  // -----------------------------------------------------------------------------
+
+  const _TextMod();
+
+  // -----------------------------------------------------------------------------
+  /// TESTED : WORKS PERFECT
+  static String removeTextBeforeLastSpecialCharacter(String verse, String specialCharacter) {
+    String _result = verse;
+
+    if (_TextCheck.isEmpty(verse) == false){
+
+      final bool _verseContainsChar = _TextCheck.stringContainsSubString(
+        string: verse,
+        subString: specialCharacter,
+      );
+
+      if (_verseContainsChar == true) {
+        final int _position = verse?.lastIndexOf(specialCharacter);
+        _result = verse == null ? null
+            :
+        (_position != -1) ? verse.substring(_position + 1, verse.length)
+            :
+        verse;
+      }
+
+    }
+
+    return _result;
+  }
+  // --------------------
+  /// TESTED : WORKS PERFECT
+  static String removeNumberOfCharactersFromEndOfAString(String string, int numberOfCharacters) {
+
+    // if (numberOfCharacters > string.length){
+    //   blog('can not remove ($numberOfCharacters) from the given string because : numberOfCharacters > string.length');
+    //   throw('can not remove ($numberOfCharacters) from the given string because');
+    // } else {}
+    // blog('string length ${string.trim().length} and : numberOfCharacters : $numberOfCharacters');
+
+    if (string != null && string.trim().isNotEmpty) {
+
+      if (string.trim().length == numberOfCharacters) {
+        return '';
+      }
+
+      else if (string.trim().length > numberOfCharacters) {
+        return string.substring(0, string.trim().length - numberOfCharacters);
+      }
+
+      else {
+        return '';
+      }
+
+    }
+
+    else {
+      return null;
+    }
+
+  }
+  // --------------------
+  /// TESTED : WORKS PERFECT
+  static String removeNumberOfCharactersFromBeginningOfAString({
+    @required String string,
+    @required int numberOfCharacters,
+  }) {
+    String _stringTrimmed;
+    if (numberOfCharacters > string.length) {
+      blog('can not remove ($numberOfCharacters) from the given string because : numberOfCharacters > string.length');
+      final Error _error = ArgumentError(
+          'can not remove ($numberOfCharacters) from the given string because',
+          'removeNumberOfCharactersFromBeginningOfAString');
+      throw _error;
+    }
+
+    else {
+      _stringTrimmed = string.isNotEmpty ? string?.substring(numberOfCharacters) : null;
+    }
+
+    return _stringTrimmed;
+  }
+  // --------------------
+  /// TESTED : WORKS PERFECT
+  static String removeTextBeforeFirstSpecialCharacter(String verse, String specialCharacter) {
+    String _result = verse;
+
+    if (_TextCheck.isEmpty(verse) == false){
+
+      final bool _verseContainsChar = _TextCheck.stringContainsSubString(
+        string: verse,
+        subString: specialCharacter,
+      );
+
+      if (_verseContainsChar == true) {
+        final int _position = verse?.indexOf(specialCharacter);
+        _result = verse == null ?
+        null
+            :
+        (_position != -1) ?
+        verse.substring(_position + 1, verse.length)
+            :
+        verse;
+      }
+
+    }
+
+    return _result;
+  }
+  // --------------------
+}
+// ====================
+void blog(dynamic msg, {String invoker}){
+
+  assert((){
+    // log(msg.toString());
+    // ignore: avoid_print
+    print(msg?.toString());
+    return true;
+  }(), '_');
+
+  /// NOUR IDEA
+  /*
+    extension Printer on dynamic {
+      void log() {
+        return dev.log(toString());
+      }
+    }
+     */
+
+}
+// ==============================================================================
+
+/// NUMERIC
+
+// ====================
 
 /// => TAMAM
 class Numeric {
@@ -99,7 +302,7 @@ class Numeric {
 
     }
 
-    if (TextCheck.isEmpty(_fractions) == false){
+    if (_TextCheck.isEmpty(_fractions) == false){
       return '$_result.$_fractions';
     }
     else {
@@ -265,7 +468,7 @@ class Numeric {
 
     // blog('random number is : $_randomNumber');
 
-    if (Mapper.checkCanLoopList(existingIndexes)) {
+    if (_Mapper.checkCanLoopList(existingIndexes)) {
       if (existingIndexes.contains(_randomNumber)) {
         _randomNumber = createUniqueIndex(
             existingIndexes: existingIndexes,
@@ -286,7 +489,7 @@ class Numeric {
     /// some smart ass stunt online said : DateTime.now().millisecondsSinceEpoch ~/ 1000;
     final String _string = DateTime.now().microsecondsSinceEpoch.toString();
 
-    final String _trimmed = TextMod.removeNumberOfCharactersFromBeginningOfAString(
+    final String _trimmed = _TextMod.removeNumberOfCharactersFromBeginningOfAString(
       string: _string,
       numberOfCharacters: _string.length - maxDigitsCount,
     );
@@ -378,7 +581,7 @@ class Numeric {
   }) {
     final List<int> _values = <int>[];
 
-    if (Mapper.checkCanLoopList(keys)) {
+    if (_Mapper.checkCanLoopList(keys)) {
       for (final ValueKey<int> key in keys) {
         _values.add(key.value);
       }
@@ -423,7 +626,7 @@ class Numeric {
         fractionDigits: fractionDigits
     );
 
-    final String _fractionsString = TextMod.removeTextBeforeLastSpecialCharacter(_numberAsString, '.');
+    final String _fractionsString = _TextMod.removeTextBeforeLastSpecialCharacter(_numberAsString, '.');
 
     return transformStringToDouble('0.$_fractionsString');
   }
@@ -448,14 +651,14 @@ class Numeric {
     int fractionDigits
   }) {
     final String _numberAsString = number.toString();
-    String _fractionAsStringWithoutZero = TextMod.removeTextBeforeLastSpecialCharacter(_numberAsString, '.');
+    String _fractionAsStringWithoutZero = _TextMod.removeTextBeforeLastSpecialCharacter(_numberAsString, '.');
 
     if (fractionDigits != null) {
       final int _fractionStringLength = _fractionAsStringWithoutZero.length;
       final int _trimmingLength = _fractionStringLength - fractionDigits;
       if (_trimmingLength >= 0) {
         _fractionAsStringWithoutZero =
-            TextMod.removeNumberOfCharactersFromEndOfAString(
+            _TextMod.removeNumberOfCharactersFromEndOfAString(
                 _fractionAsStringWithoutZero, _trimmingLength);
       }
     }
@@ -473,7 +676,7 @@ class Numeric {
         fractionDigits: 100,
     );
 
-    final String _numberFractionsString = TextMod.removeTextBeforeFirstSpecialCharacter(
+    final String _numberFractionsString = _TextMod.removeTextBeforeFirstSpecialCharacter(
         _numberFraction.toString(), '.');
 
     return _numberFractionsString.trim().length;
@@ -486,8 +689,8 @@ class Numeric {
   }){
     bool _hasInvalidDigits = false;
 
-    if (TextCheck.isEmpty(numberAsText) == false){
-      final String _fractionsStrings = TextMod.removeTextBeforeFirstSpecialCharacter(numberAsText, '.');
+    if (_TextCheck.isEmpty(numberAsText) == false){
+      final String _fractionsStrings = _TextMod.removeTextBeforeFirstSpecialCharacter(numberAsText, '.');
       final int _numberOfFractions = _fractionsStrings.length;
       _hasInvalidDigits = _numberOfFractions > maxDigits;
     }
@@ -633,4 +836,22 @@ class Numeric {
     return _reversedIndex;
   }
   // -----------------------------------------------------------------------------
+
+  /// PYTHAGORAS
+
+  // --------------------
+  /// TESTED : WORKS PERFECT
+  static double pythagorasHypotenuse({
+    @required double side,
+    double side2,
+  }) {
+    /// side^2 * side^2 = hypotenuse^2
+    final double _side2 = side2 ?? side;
+    final double _sideSquared = Numeric.calculateDoublePower(num: side, power: 2);
+    final double _side2Squared = Numeric.calculateDoublePower(num: _side2, power: 2);
+    return math.sqrt(_sideSquared + _side2Squared);
+  }
+  // -----------------------------------------------------------------------------
 }
+
+// ==============================================================================
