@@ -135,7 +135,7 @@ class _TextMod {
   }) {
     String _stringTrimmed;
     if (numberOfCharacters > string.length) {
-      blog('can not remove ($numberOfCharacters) from the given string because : numberOfCharacters > string.length');
+      _blog('can not remove ($numberOfCharacters) from the given string because : numberOfCharacters > string.length');
       final Error _error = ArgumentError(
           'can not remove ($numberOfCharacters) from the given string because',
           'removeNumberOfCharactersFromBeginningOfAString');
@@ -178,7 +178,7 @@ class _TextMod {
   // --------------------
 }
 // ====================
-void blog(dynamic msg, {String invoker}){
+void _blog(dynamic msg){
 
   assert((){
     // log(msg.toString());
@@ -777,7 +777,7 @@ class Numeric {
 
       if (searchedValue == list[_mid]){
 
-        blog('Found searchedValue at index $_mid');
+        _blog('Found searchedValue at index $_mid');
         _output =  _mid;
       }
 
@@ -792,7 +792,7 @@ class Numeric {
     }
 
     if (_output == null){
-      blog('Not Found');
+      _blog('Not Found');
     }
 
     return _output;
