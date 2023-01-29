@@ -183,7 +183,7 @@ void _blog(dynamic msg){
   assert((){
     // log(msg.toString());
     // ignore: avoid_print
-    print(msg?.toString());
+    print(msg);
     return true;
   }(), '_');
 
@@ -214,31 +214,27 @@ class Numeric {
   /// FORMATTERS
 
   // --------------------
-  /// TESTED : WORKS PERFECT
+  /// AI TESTED
   static String formatNumToSeparatedKilos({
     @required dynamic number,
     int fractions = 2,
     String separator = "'",
   }) {
 
-    assert(number is int || number is double || number == null, 'number is neither int nor double');
+    assert(number is int || number is double || number == null, '_theNum is neither int nor double');
+
+    final double _theNum = roundFractions(number.toDouble(), fractions);
 
     /// THE SEPARATOR AFTER EACH 3 DIGITS IN AN INTEGER X'XXX'XXX ...
     String _result = '0';
     final String _fractions = Numeric.getFractionStringWithoutZero(
-      number: number?.toDouble() ?? 0,
+      number: _theNum ?? 0,
       fractionDigits: fractions,
     );
 
-    if (number != null) {
+    if (_theNum != null) {
 
-      int _numAsInt;
-      if (number is double){
-        _numAsInt = number.toInt();
-      }
-      else {
-        _numAsInt = number;
-      }
+      final int _numAsInt = _theNum.toInt();
 
       /// -999 < x < 999
       if (_numAsInt > -1000 && _numAsInt < 1000) {
@@ -282,8 +278,8 @@ class Numeric {
 
       }
 
-      // if (number == null) return '0';
-      // if (number > -1000 && number < 1000) return number.toString();
+      // if (_theNum == null) return '0';
+      // if (_theNum > -1000 && _theNum < 1000) return _theNum.toString();
 
       final String _digits = _numAsInt.abs().toString();
       final StringBuffer _resultStringBuffer = StringBuffer(_numAsInt < 0 ? '-' : '');
@@ -302,7 +298,7 @@ class Numeric {
 
     }
 
-    if (_TextCheck.isEmpty(_fractions) == false){
+    if (_TextCheck.isEmpty(_fractions) == false && _fractions != '0'){
       return '$_result.$_fractions';
     }
     else {
@@ -311,12 +307,11 @@ class Numeric {
 
   }
   // --------------------
-  /// TESTED : WORKS PERFECT
+  /// AI TESTED
   static String formatNumToCounterCaliber({
     @required int x,
     String thousand = 'thousand',
     String million = 'million',
-
   }) {
     String _stringOfCalibratedNumber = '0';
 
@@ -352,7 +347,7 @@ class Numeric {
     return _stringOfCalibratedNumber;
   }
   // --------------------
-  /// TESTED : WORKS PERFECT
+  /// AI TESTED
   static String formatNumberWithinDigits({
     @required int num,
     @required int digits,
@@ -362,7 +357,6 @@ class Numeric {
     /// for digits = 4,, any number should be written like this 0000
     /// 0001 -> 0010 -> 0100 -> 1000 -> 9999
     /// when num = 10000 => should return 'increase digits to view number'
-
 
     String _output;
 

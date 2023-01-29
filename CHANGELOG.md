@@ -1,7 +1,11 @@
-## 0.0.2
+## 1.0.3
+
+* Started Ai generated tests
+
+## 1.0.2
 
 * Fixes
 
-## 0.0.1
+## 1.0.1
 
 * MOVED numeric class into this package
