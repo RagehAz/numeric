@@ -393,13 +393,19 @@ class Numeric {
     return _output;
   }
   // --------------------
-  /// TESTED : WORKS PERFECT
+  /// AI TESTED
   static int concludeNumberOfDigits(int length){
-    final int _length = length == null || length <= 0 ? 0 : length - 1;
-    return _length.toString().length;
+    int _length = 0;
+
+    if (length != null && length != 0){
+      _length = modulus(length.toDouble()).toInt();
+      _length = _length.toString().length;
+    }
+
+    return _length;
   }
   // --------------------
-  /// TESTED : WORKS PERFECT
+  /// AI TESTED
   static String formatIndexDigits({
     @required int index,
     @required int listLength,
@@ -416,22 +422,21 @@ class Numeric {
   /// TRANSFORMERS
 
   // --------------------
-  /// TESTED : WORKS PERFECT
+  /// AI TESTED
   static int transformStringToInt(String string) {
     int _value;
 
     if (string != null) {
-      _value = int.tryParse(string);
+      final double _doubleValue = double.tryParse(string);
+      _value = _doubleValue?.toInt();
     }
 
     return _value;
   }
   // --------------------
-  /// TESTED : WORKS PERFECT
+  /// AI TESTED
   static double transformStringToDouble(String string) {
     double _value;
-
-    // blog('stringToDouble : string : $string');
 
     if (string != null && string != '') {
       _value = double.tryParse(string);
@@ -444,37 +449,35 @@ class Numeric {
   /// CREATORS
 
   // --------------------
-  /// TESTED : WORKS PERFECT
+  /// AI TESTED
   static int createRandomIndex({
     int listLength = 1001, /// FOR 1000 ITEMS => ONLY VALUES FROM ( 0 -> 999 ) MAY RESULT
   }) {
     return math.Random().nextInt(listLength);
   }
   // --------------------
-  /// TESTED : WORKS PERFECT
+  /// AI TESTED
   static int createUniqueIndex({
     @required List<int> existingIndexes,
     int maxIndex = 999999,
   }) {
-
     /// from 0 up to 999'999 included if max index is not defined
     int _randomNumber = math.Random().nextInt(maxIndex + 1);
 
     // blog('random number is : $_randomNumber');
 
-    if (_Mapper.checkCanLoopList(existingIndexes)) {
-      if (existingIndexes.contains(_randomNumber)) {
-        _randomNumber = createUniqueIndex(
-            existingIndexes: existingIndexes,
-            maxIndex: maxIndex
-        );
+    if (_Mapper.checkCanLoopList(existingIndexes) == true) {
+
+      if (existingIndexes.contains(_randomNumber) == true) {
+        _randomNumber = createUniqueIndex(existingIndexes: existingIndexes, maxIndex: maxIndex);
       }
+
     }
 
     return _randomNumber;
   }
   // --------------------
-  /// TESTED : WORKS PERFECT
+  /// AI TESTED
   static int createUniqueID({
     int maxDigitsCount = 16, // 8'640'000'000'000'000'000
   }) {
@@ -492,20 +495,27 @@ class Numeric {
     return transformStringToInt(_trimmed);
   }
   // --------------------
+  /*
   /// TESTED : WORKS PERFECT
   static ValueKey<int> createUniqueKeyFrom({
-    @required List<ValueKey<int>> existingKeys
+    @required List<ValueKey<int>> existingKeys,
+    int maxIndex = 9999,
   }) {
 
     final List<int> _existingValues = getValuesFromKeys(
         keys: existingKeys
     );
 
-    final int _newValue = createUniqueIndex(existingIndexes: _existingValues);
+    final int _newValue = createUniqueIndex(
+      existingIndexes: _existingValues,
+      maxIndex: maxIndex,
+    );
 
     return ValueKey<int>(_newValue);
   }
+   */
   // --------------------
+  /*
   /// TESTED : WORKS PERFECT
   static List<dynamic> createListWithDummyValue({
     @required int length,
@@ -519,8 +529,9 @@ class Numeric {
 
     return _dummies;
   }
+   */
   // --------------------
-  /// TESTED : WORKS PERFECT
+  /// AI TESTED
   static List<int> createRandomIndexes({
     @required int numberOfIndexes,
     @required int maxIndex,
@@ -543,7 +554,7 @@ class Numeric {
   /// BOOL CYPHERS
 
   // --------------------
-  /// TESTED : WORKS PERFECT
+  /// AI TESTED
   static int cipherBool({
     @required bool bool,
   }) {
@@ -555,7 +566,7 @@ class Numeric {
     }
   }
   // --------------------
-  /// TESTED : WORKS PERFECT
+  /// AI TESTED
   static bool decipherBool(int int) {
     /// 1 => true; 0 => false else => null (returning false instead of null)
     switch (int) {
@@ -569,13 +580,14 @@ class Numeric {
   /// VALUE KEYS
 
   // --------------------
+  /*
   /// TESTED : WORKS PERFECT
   static List<int> getValuesFromKeys({
     @required List<ValueKey<int>> keys,
   }) {
     final List<int> _values = <int>[];
 
-    if (_Mapper.checkCanLoopList(keys)) {
+    if (_Mapper.checkCanLoopList(keys) == true) {
       for (final ValueKey<int> key in keys) {
         _values.add(key.value);
       }
@@ -599,6 +611,7 @@ class Numeric {
 
     return _newKeys;
   }
+   */
   // -----------------------------------------------------------------------------
 
   /// FRACTION

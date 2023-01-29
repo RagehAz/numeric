@@ -1,3 +1,7 @@
+## 1.0.4
+
+* More tests
+
 ## 1.0.3
 
 * Started Ai generated tests
