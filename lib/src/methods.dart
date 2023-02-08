@@ -221,88 +221,87 @@ class Numeric {
     String separator = "'",
   }) {
 
-    assert(number is int || number is double || number == null, '_theNum is neither int nor double');
-
-    final double _theNum = roundFractions(number.toDouble(), fractions);
+    // assert(number is int || number is double || number == null, '_theNum is neither int nor double');
 
     /// THE SEPARATOR AFTER EACH 3 DIGITS IN AN INTEGER X'XXX'XXX ...
     String _result = '0';
-    final String _fractions = Numeric.getFractionStringWithoutZero(
-      number: _theNum ?? 0,
-      fractionDigits: fractions,
-    );
 
-    if (_theNum != null) {
+    if (number == null){
+      return _result;
+    }
 
-      final int _numAsInt = _theNum.toInt();
+    else {
 
-      /// -999 < x < 999
-      if (_numAsInt > -1000 && _numAsInt < 1000) {
-        _result = _numAsInt.toString();
-      }
+      final double _theNum = roundFractions(number?.toDouble(), fractions);
+      final String _fractions = Numeric.getFractionStringWithoutZero(
+        number: _theNum ?? 0,
+        fractionDigits: fractions,
+      );
 
-      /// 1000 < x
-      else {
+      if (_theNum != null) {
+        final int _numAsInt = _theNum.toInt();
 
-        final double _fractions = getFractions(
-          number: _numAsInt.toDouble(),
-        );
-
-        final int _number = _numAsInt; //.floor();
-        final String _digits = _number.abs().toString();
-        final StringBuffer _separatedNumberWithoutFractions = StringBuffer(_number < 0 ? '-' : '');
-        final int _maxDigitIndex = _digits.length - 1;
-
-        for (int i = 0; i <= _maxDigitIndex; i += 1) {
-          _separatedNumberWithoutFractions.write(_digits[i]);
-
-          if (i < _maxDigitIndex && (_maxDigitIndex - i) % 3 == 0) {
-            _separatedNumberWithoutFractions.write("'");
-          }
-
+        /// -999 < x < 999
+        if (_numAsInt > -1000 && _numAsInt < 1000) {
+          _result = _numAsInt.toString();
         }
 
-        if (_fractions > 0) {
-
-          final String _fractionWithoutZero = getFractionStringWithoutZero(
-            number: _fractions,
+        /// 1000 < x
+        else {
+          final double _fractions = getFractions(
+            number: _numAsInt.toDouble(),
           );
 
-          _result = '$_separatedNumberWithoutFractions.$_fractionWithoutZero';
+          final int _number = _numAsInt; //.floor();
+          final String _digits = _number.abs().toString();
+          final StringBuffer _separatedNumberWithoutFractions =
+              StringBuffer(_number < 0 ? '-' : '');
+          final int _maxDigitIndex = _digits.length - 1;
 
+          for (int i = 0; i <= _maxDigitIndex; i += 1) {
+            _separatedNumberWithoutFractions.write(_digits[i]);
+
+            if (i < _maxDigitIndex && (_maxDigitIndex - i) % 3 == 0) {
+              _separatedNumberWithoutFractions.write("'");
+            }
+          }
+
+          if (_fractions > 0) {
+            final String _fractionWithoutZero = getFractionStringWithoutZero(
+              number: _fractions,
+            );
+
+            _result = '$_separatedNumberWithoutFractions.$_fractionWithoutZero';
+          } else {
+            _result = '$_separatedNumberWithoutFractions';
+          }
         }
 
-        else {
-          _result = '$_separatedNumberWithoutFractions';
-        }
+        // if (_theNum == null) return '0';
+        // if (_theNum > -1000 && _theNum < 1000) return _theNum.toString();
 
+        final String _digits = _numAsInt.abs().toString();
+        final StringBuffer _resultStringBuffer = StringBuffer(_numAsInt < 0 ? '-' : '');
+        final int maxDigitIndex = _digits.length - 1;
+
+        for (int i = 0; i <= maxDigitIndex; i += 1) {
+          _resultStringBuffer.write(_digits[i]);
+
+          if (i < maxDigitIndex && (maxDigitIndex - i) % 3 == 0) {
+            _resultStringBuffer.write(separator);
+          }
+        }
+        _result = _resultStringBuffer.toString();
       }
 
-      // if (_theNum == null) return '0';
-      // if (_theNum > -1000 && _theNum < 1000) return _theNum.toString();
-
-      final String _digits = _numAsInt.abs().toString();
-      final StringBuffer _resultStringBuffer = StringBuffer(_numAsInt < 0 ? '-' : '');
-      final int maxDigitIndex = _digits.length - 1;
-
-      for (int i = 0; i <= maxDigitIndex; i += 1) {
-
-        _resultStringBuffer.write(_digits[i]);
-
-        if (i < maxDigitIndex && (maxDigitIndex - i) % 3 == 0) {
-          _resultStringBuffer.write(separator);
-        }
-
+      if (_TextCheck.isEmpty(_fractions) == false && _fractions != '0') {
+        return '$_result.$_fractions';
       }
-      _result =  _resultStringBuffer.toString();
 
-    }
+      else {
+        return _result;
+      }
 
-    if (_TextCheck.isEmpty(_fractions) == false && _fractions != '0'){
-      return '$_result.$_fractions';
-    }
-    else {
-      return _result;
     }
 
   }

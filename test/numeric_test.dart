@@ -70,6 +70,10 @@ void main(){
       expect(Numeric.formatNumToSeparatedKilos(number: -999.9999), equals("-1'000"));
     });
 
+    test('null case', () {
+      expect(Numeric.formatNumToSeparatedKilos(number: null), equals('0'));
+    });
+
   });
   // -----------------------------------------------------------------------------
 
